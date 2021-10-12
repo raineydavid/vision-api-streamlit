@@ -19,43 +19,43 @@ from PIL import Image
 st.sidebar.title("Computer Vision API")
 st.sidebar.markdown(
     """
-    En esta sencilla app podrás poner a prueba tu servicio de _Computer Vision_
-    de Microsoft Azure.
+    In this simple app you can test your _Computer Vision_ of Microsoft Azure.
+    
     """
 )
 api_key = st.sidebar.text_input('API Key')
 endpoint = st.sidebar.text_input('Endpoint')
 
 
-st.title("Análisis de imágenes con Computer Vision API")
+st.title("Image Analysis with Computer Vision API")
 st.markdown(
     """
-    A continuación podrás explorar los resultados del análisis de imágenes
-    que tiene Computer Vision API de Microsoft Azure. En el siguiente bloque
-    podrás cargar una imagen desde tu computadore y utilizar tu propia API de
-    Computer Vision para realizar un análisis de la misma.
+    Below you can explore the results of the image analysis which 
+    has the Microsoft Azure Computer Vision API. In the next block 
+    you can upload an image from your computer anduse your own API 
+    Computer Vision to perform an analysis of it. 
     """
 )
 
 valid_formats = ['png', 'jpg', 'jpeg']
-upfile = st.file_uploader('Por favor carga una imagen.', type=valid_formats)
+upfile = st.file_uploader('Please upload an image.', type=valid_formats)
 if upfile is not None:
     img_bytes = upfile.read()
     img = Image.open(upfile)
     img = np.array(img).astype('uint8')
-    st.image(img, caption='Imagen cargada.')
+    st.image(img, caption='Image uploaded .')
 
 
-if st.button('Procesar imagen con Computer Vision API'):
+if st.button('Process image with Computer Vision API'):
     # Verify keys and values
     if upfile is None:
-        st.error('Debes cargar una imagen.')
+        st.error('You must upload an image.')
 
     if api_key == '':
-        st.error('Debes ingresar una API Key.')
+        st.error('You must enter an API Key.')
     
     if endpoint == '':
-        st.error('Debes ingresar un endpoint válido.')
+        st.error('You must enter a valid endpoint.')
     
     if upfile and api_key and endpoint:
         # Create metadata for Computer Vision API
@@ -86,21 +86,21 @@ if st.button('Procesar imagen con Computer Vision API'):
         
         st.markdown(
             f"""
-            ## Resultados del análisis de la imagen
+            ## Image analysis results
 
-            **Archivo JSON de respuesta:**
+            **JSON file response:**
             ```json
             {analysis}
             ```
 
-            **Descripción de Computer Vision API:**
+            **Description of Computer Vision API:**
             _"{image_caption}"_.
             """
         )
 
         st.markdown(
             f"""
-            **Etiquetas de elementos detectados:**
+            **Tags of items detected:**
             {items} 
             """
         )
